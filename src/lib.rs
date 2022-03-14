@@ -155,9 +155,17 @@
 //! Leftover argument values are values supplied on the command line that are not associated with
 //! any argument. These includes:
 //!
-//! - any values when no other argument types have been supplied e.g `ls file1 file2... fileN`
+//! - any values when no other argument types have been supplied e.g:
 //!
-//! - any values after the double-dash argument e.g `ls -l -R  -- file1 file2... fileN`
+//!```ignore
+//! ls file1 file2... fileN
+//!```
+//!
+//! - any values after the double-dash argument e.g:
+//!
+//!```ignore
+//! ls -l -R  -- file1 file2... fileN`
+//!```
 //!
 //! - any value supplied to flags, because flags do not accept values
 //!
