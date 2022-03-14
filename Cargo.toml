@@ -1,6 +1,6 @@
 [package]
 name        = "clappers"
-version     = "1.2.7"
+version     = "1.2.8"
 description = "Command Line Argument Parsing Particularly Easy, Relatively Stressfree!"
 authors     = ["Alfie John <alfie@alfie.wtf>"]
 

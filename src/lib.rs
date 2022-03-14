@@ -5,7 +5,7 @@
 //! via chaining, with the last link in the chain being a call to `parse()`. Command line argument
 //! values are then retrieved via getters on the `Clappers` parser.
 //!
-//! ## Example 1 - A Minimal `ls`
+//! ## Example 1 - A Minimal Directory Listing
 //!
 //! ```
 //! use clappers::Clappers;
