@@ -1,6 +1,6 @@
 # Clappers
 
-Command Line Argument Parsing Particularly Easy, Relatively Stressfree!
+Command Line Argument Parsing Particularly Easy, Relatively Straightforward!
 
 `Clappers` aims to be the most user-friendly command line argument parser this
 side of the Milky Way. You configure a `Clappers` parser with the command line
