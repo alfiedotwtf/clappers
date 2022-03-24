@@ -15,7 +15,7 @@ use clappers::Clappers;
 
 fn main() {
     let clappers = Clappers::build()
-        .add_flags(vec![
+        .set_flags(vec![
             "h|help",
             "l",
             "R|recursive",
@@ -58,14 +58,14 @@ use clappers::Clappers;
 
 fn main() {
     let clappers = Clappers::build()
-        .add_flags(vec![
+        .set_flags(vec![
             "h|help",
             "v|verbose",
         ])
-        .add_singles(vec![
+        .set_singles(vec![
             "o|output",
         ])
-        .add_multiples(vec![
+        .set_multiples(vec![
             "i|input",
             "I",
             "L",
@@ -208,7 +208,7 @@ use clappers::Clappers;
 
 fn main() {
     let clappers = Clappers::build()
-        .add_singles(vec!["number"])
+        .set_singles(vec!["number"])
         .parse();
 
     let number: i32 = clappers.get_single("number").parse().unwrap();
