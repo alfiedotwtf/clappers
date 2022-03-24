@@ -1,6 +1,6 @@
 [package]
 name        = "clappers"
-version     = "1.2.9"
+version     = "2.0.0"
 description = "Command Line Argument Parsing Particularly Easy, Relatively Straightforward!"
 authors     = ["Alfie John <alfie@alfie.wtf>"]
 
@@ -9,4 +9,4 @@ homepage      = "https://crates.io/crates/clappers"
 repository    = "https://github.com/alfiedotwtf/clappers"
 readme        = "README.md"
 license       = "GPL-2.0-only"
-edition       = "2021"
+edition       = "2018"

@@ -12,7 +12,7 @@
 //!
 //! fn main() {
 //!     let clappers = Clappers::build()
-//!         .add_flags(vec![
+//!         .set_flags(vec![
 //!             "h|help",
 //!             "l",
 //!             "R|recursive",
@@ -55,14 +55,14 @@
 //!
 //! fn main() {
 //!     let clappers = Clappers::build()
-//!         .add_flags(vec![
+//!         .set_flags(vec![
 //!             "h|help",
 //!             "v|verbose",
 //!         ])
-//!         .add_singles(vec![
+//!         .set_singles(vec![
 //!             "o|output",
 //!         ])
-//!         .add_multiples(vec![
+//!         .set_multiples(vec![
 //!             "i|input",
 //!             "I",
 //!             "L",
@@ -202,7 +202,7 @@
 //!
 //! fn main() {
 //!     let clappers = Clappers::build()
-//!         .add_singles(vec!["number"])
+//!         .set_singles(vec!["number"])
 //!         .parse();
 //!
 //!     let number: i32 = clappers.get_single("number").parse().unwrap_or(0);
@@ -227,9 +227,9 @@ impl Clappers {
     ///
     /// An empty `Clappers` parser, which is ready to be configured by chaining:
     ///
-    /// - `add_flags()`
-    /// - `add_singles()`
-    /// - `add_multiples()`
+    /// - `set_flags()`
+    /// - `set_singles()`
+    /// - `set_multiples()`
     ///
     /// Once configured, `parse()` is chained last to parse the actual command line arguments
     ///
@@ -240,9 +240,9 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_flags(vec!["h|help", "v|verbose"])
-    ///         .add_singles(vec!["o|output", "u|username"])
-    ///         .add_multiples(vec!["i|input", "host"])
+    ///         .set_flags(vec!["h|help", "v|verbose"])
+    ///         .set_singles(vec!["o|output", "u|username"])
+    ///         .set_multiples(vec!["i|input", "host"])
     ///         .parse();
     ///
     ///     // ...
@@ -285,7 +285,7 @@ impl Clappers {
     /// Each `arg_spec` contains "|" separated flag argument alias names e.g:
     ///
     ///```ignore
-    /// clappers.add_flags(vec!["h|help", "v|verbose"]);
+    /// clappers.set_flags(vec!["h|help", "v|verbose"]);
     ///```
     ///
     /// # Return value
@@ -299,16 +299,16 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_flags(vec!["h|help", "v|verbose"])
-    ///         .add_singles(vec!["o|output", "u|username"])
-    ///         .add_multiples(vec!["i|input", "host"])
+    ///         .set_flags(vec!["h|help", "v|verbose"])
+    ///         .set_singles(vec!["o|output", "u|username"])
+    ///         .set_multiples(vec!["i|input", "host"])
     ///         .parse();
     ///
     ///     // ...
     /// }
     /// ```
     ///
-    pub fn add_flags(mut self, arg_specs: Vec<&str>) -> Self {
+    pub fn set_flags(mut self, arg_specs: Vec<&str>) -> Self {
         self.config.flags.add_to_config(arg_specs);
         self
     }
@@ -332,7 +332,7 @@ impl Clappers {
     /// Each `arg_spec` contains "|" separated single value argument alias names e.g:
     ///
     ///```ignore
-    /// clappers.add_singles(vec!["o|output", "u|username"]);
+    /// clappers.set_singles(vec!["o|output", "u|username"]);
     ///```
     ///
     /// # Return value
@@ -346,16 +346,16 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_flags(vec!["h|help", "v|verbose"])
-    ///         .add_singles(vec!["o|output", "u|username"])
-    ///         .add_multiples(vec!["i|input", "host"])
+    ///         .set_flags(vec!["h|help", "v|verbose"])
+    ///         .set_singles(vec!["o|output", "u|username"])
+    ///         .set_multiples(vec!["i|input", "host"])
     ///         .parse();
     ///
     ///     // ...
     /// }
     /// ```
     ///
-    pub fn add_singles(mut self, arg_specs: Vec<&str>) -> Self {
+    pub fn set_singles(mut self, arg_specs: Vec<&str>) -> Self {
         self.config.singles.add_to_config(arg_specs);
         self
     }
@@ -393,7 +393,7 @@ impl Clappers {
     /// Each `arg_spec` contains "|" separated multiple value argument alias names e.g:
     ///
     ///```ignore
-    /// clappers.add_multiples(vec!["i|input", "host"]);
+    /// clappers.set_multiples(vec!["i|input", "host"]);
     ///```
     ///
     /// # Return value
@@ -407,16 +407,16 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_flags(vec!["h|help", "v|verbose"])
-    ///         .add_singles(vec!["o|output", "u|username"])
-    ///         .add_multiples(vec!["i|input", "host"])
+    ///         .set_flags(vec!["h|help", "v|verbose"])
+    ///         .set_singles(vec!["o|output", "u|username"])
+    ///         .set_multiples(vec!["i|input", "host"])
     ///         .parse();
     ///
     ///     // ...
     /// }
     /// ```
     ///
-    pub fn add_multiples(mut self, arg_specs: Vec<&str>) -> Self {
+    pub fn set_multiples(mut self, arg_specs: Vec<&str>) -> Self {
         self.config.multiples.add_to_config(arg_specs);
         self
     }
@@ -443,9 +443,9 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_flags(vec!["h|help", "v|verbose"])
-    ///         .add_singles(vec!["o|output", "u|username"])
-    ///         .add_multiples(vec!["i|input", "host"])
+    ///         .set_flags(vec!["h|help", "v|verbose"])
+    ///         .set_singles(vec!["o|output", "u|username"])
+    ///         .set_multiples(vec!["i|input", "host"])
     ///         .parse();
     ///
     ///     if clappers.get_flag("help") {
@@ -535,7 +535,7 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_flags(vec!["h|help"])
+    ///         .set_flags(vec!["h|help"])
     ///         .parse();
     ///
     ///     if clappers.get_flag("help") {
@@ -576,7 +576,7 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_singles(vec!["output"])
+    ///         .set_singles(vec!["output"])
     ///         .parse();
     ///
     ///     println!("Output filename is {}", clappers.get_single("output"));
@@ -617,7 +617,7 @@ impl Clappers {
     ///
     /// fn main() {
     ///     let clappers = Clappers::build()
-    ///         .add_multiples(vec!["input"])
+    ///         .set_multiples(vec!["input"])
     ///         .parse();
     ///
     ///     println!("Input filenames are {:#?}", clappers.get_multiple("input"));
