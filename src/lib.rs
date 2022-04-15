@@ -105,7 +105,7 @@
 //!
 //!```ignore
 //! -h
-//! -help
+//! --help
 //! -v
 //! --verbose
 //!```
@@ -173,19 +173,19 @@
 //!
 //! # Caveats
 //!
-//! Combining flags is currently unsupported i.e the following does not work:
+//! - Combining flags is currently unsupported i.e the following does not work:
 //!
 //!```ignore
 //! tar -zcf filename.tar.gz *
 //!```
 //!
-//! Equals-Value is currently unsupported i.e the following does not work:
+//! - Equals-Value is currently unsupported i.e the following does not work:
 //!
 //!```ignore
 //! tar -zc --file=filename.tar.gz
 //!```
 //!
-//! Commands with their own separate `Clappers` parser is currently unsupported i.e the following
+//! - Commands with their own separate `Clappers` parser is currently unsupported i.e the following
 //! does not work:
 //!
 //!```ignore
@@ -193,7 +193,7 @@
 //! apt-get update -f
 //!```
 //!
-//! Command line argument values are always `String` types. This was by design, and no convenience
+//! - Command line argument values are always `String` types. This was by design, and no convenience
 //! functions are planned. To convert a `String` to something else, use `String`'s build-in
 //! `parse()` function instead:
 //!
@@ -271,7 +271,7 @@ impl Clappers {
     ///
     ///```ignore
     /// -h
-    /// -help
+    /// --help
     /// -v
     /// --verbose
     ///```
