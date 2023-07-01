@@ -205,7 +205,7 @@
 //!
 //! - Command line argument values are always `String` types. This was
 //! by design, and no convenience functions are planned. To convert a
-//! `String` to something else, use `String`'s build-in `parse()`
+//! `String` to something else, use `String`'s built-in `parse()`
 //! function instead:
 //!
 //!```

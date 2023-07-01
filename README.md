@@ -5,7 +5,7 @@ Command Line Argument Parsing Particularly Easy, Relatively Straightforward!
 `Clappers` aims to be the most user-friendly command line argument parser this
 side of the Milky Way. You configure a `Clappers` parser with the command line
 arguments you care about via chaining, with the last link in the chain being a
-call to `parse()`. Command line argument values are then retrieved via getters
+call to `build()`. Command line argument values are then retrieved via getters
 on the `Clappers` parser.
 
 ## Example 1 - A Minimal Directory Listing
@@ -14,13 +14,13 @@ on the `Clappers` parser.
 use clappers::Clappers;
 
 fn main() {
-    let clappers = Clappers::build()
+    let clappers = Clappers::new()
         .set_flags(vec![
             "h|help",
             "l",
             "R|recursive",
         ])
-        .parse();
+        .build();
 
     if clappers.get_flag("help") {
         println!("
@@ -57,7 +57,7 @@ fn main() {
 use clappers::Clappers;
 
 fn main() {
-    let clappers = Clappers::build()
+    let clappers = Clappers::new()
         .set_flags(vec![
             "h|help",
             "v|verbose",
@@ -70,7 +70,7 @@ fn main() {
             "I",
             "L",
         ])
-        .parse();
+        .build();
 
     if clappers.get_flag("help") {
         println!("
@@ -201,15 +201,15 @@ apt-get update -f
 
 - Command line argument values are always `String` types. This was by design, and
 no convenience functions are planned. To convert a `String` to something else,
-use `String`'s build-in `parse()` function instead:
+use `String`'s built-in `parse()` function instead:
 
 ```
 use clappers::Clappers;
 
 fn main() {
-    let clappers = Clappers::build()
+    let clappers = Clappers::new()
         .set_singles(vec!["number"])
-        .parse();
+        .build();
 
     let number: i32 = clappers.get_single("number").parse().unwrap();
 
