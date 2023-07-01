@@ -1,9 +1,11 @@
 //! Clappers -  Command Line Argument Parsing Particularly Easy, Relatively Straightforward!
 //!
-//! `Clappers` aims to be the most user-friendly command line argument parser this side of the
-//! Milky Way. You configure a `Clappers` parser with the command line arguments you care about
-//! via chaining, with the last link in the chain being a call to `parse()`. Command line argument
-//! values are then retrieved via getters on the `Clappers` parser.
+//! `Clappers` aims to be the most user-friendly command line argument
+//! parser this side of the Milky Way. You configure a `Clappers`
+//! parser with the command line arguments you care about via
+//! chaining, with the last link in the chain being a call to
+//! `build()`. Command line argument values are then retrieved via
+//! getters on the `Clappers` parser.
 //!
 //! ## Example 1 - A Minimal Directory Listing
 //!
@@ -11,13 +13,13 @@
 //! use clappers::Clappers;
 //!
 //! fn main() {
-//!     let clappers = Clappers::build()
+//!     let clappers = Clappers::new()
 //!         .set_flags(vec![
 //!             "h|help",
 //!             "l",
 //!             "R|recursive",
 //!         ])
-//!         .parse();
+//!         .build();
 //!
 //!     if clappers.get_flag("help") {
 //!         println!("
@@ -54,7 +56,7 @@
 //! use clappers::Clappers;
 //!
 //! fn main() {
-//!     let clappers = Clappers::build()
+//!     let clappers = Clappers::new()
 //!         .set_flags(vec![
 //!             "h|help",
 //!             "v|verbose",
@@ -67,7 +69,7 @@
 //!             "I",
 //!             "L",
 //!         ])
-//!         .parse();
+//!         .build();
 //!
 //!     if clappers.get_flag("help") {
 //!         println!("
@@ -101,7 +103,8 @@
 //!
 //! ## 1. Flag Arguments
 //!
-//! Flag arguments are `true` if they were supplied on the command line, and `false` otherwise e.g:
+//! Flag arguments are `true` if they were supplied on the command
+//! line, and `false` otherwise e.g:
 //!
 //!```ignore
 //! -h
@@ -114,8 +117,9 @@
 //!
 //! ## 2. Single Value Arguments
 //!
-//! Single value arguments contain a single `String` value if they were supplied on the command
-//! line, and empty `String` otherwise e.g:
+//! Single value arguments contain a single `String` value if they
+//! were supplied on the command line, and empty `String` otherwise
+//! e.g:
 //!
 //!```ignore
 //! -o filename.txt
@@ -126,8 +130,9 @@
 //!
 //! ## 3. Multiple Value Arguments
 //!
-//! Multiple value arguments contain at least a single `String` value if they were supplied on the
-//! command line, and empty `String` otherwise e.g:
+//! Multiple value arguments contain at least a single `String` value
+//! if they were supplied on the command line, and empty `String`
+//! otherwise e.g:
 //!
 //!```ignore
 //! -i file1.txt
@@ -135,15 +140,17 @@
 //! --host host1
 //!```
 //!
-//! They can also contain multiple values, by repetition on the command line e.g:
+//! They can also contain multiple values, by repetition on the
+//! command line e.g:
 //!
 //!```ignore
 //! -i file1.txt -i file2.txt ... -i fileN.txt
 //! --host host1 --host host2 ... --host hostN
 //!```
 //!
-//! The following format also works, reading from the first value until either the next argument is
-//! reached, or until the end of the entire command line arguments e.g:
+//! The following format also works, reading from the first value
+//! until either the next argument is reached, or until the end of the
+//! entire command line arguments e.g:
 //!
 //!```ignore
 //! -i file1.txt file2.txt ... fileN.txt -n next_argument
@@ -152,8 +159,8 @@
 //!
 //! ## 4. Leftover Arguments
 //!
-//! Leftover argument values are values supplied on the command line that are not associated with
-//! any argument. These includes:
+//! Leftover argument values are values supplied on the command line
+//! that are not associated with any configuration. These includes:
 //!
 //! - any values when no other argument types have been supplied e.g:
 //!
@@ -169,41 +176,45 @@
 //!
 //! - any value supplied to flags, because flags do not accept values
 //!
-//! - any remaining values supplied to singles value arguments, because these only take a one value
+//! - any remaining values supplied to singles value arguments,
+//! because these only take a one value
 //!
 //! # Caveats
 //!
-//! - Combining flags is currently unsupported i.e the following does not work:
+//! - Combining flags is currently unsupported i.e the following does
+//! not work:
 //!
 //!```ignore
 //! tar -zcf filename.tar.gz *
 //!```
 //!
-//! - Equals-Value is currently unsupported i.e the following does not work:
+//! - Equals-Value is currently unsupported i.e the following does not
+//! work:
 //!
 //!```ignore
 //! tar -zc --file=filename.tar.gz
 //!```
 //!
-//! - Commands with their own separate `Clappers` parser is currently unsupported i.e the following
-//! does not work:
+//! - Commands with their own separate `Clappers` parser is currently
+//! unsupported i.e the following does not work:
 //!
 //!```ignore
 //! apt-get -y install -f cargo
 //! apt-get update -f
 //!```
 //!
-//! - Command line argument values are always `String` types. This was by design, and no convenience
-//! functions are planned. To convert a `String` to something else, use `String`'s build-in
-//! `parse()` function instead:
+//! - Command line argument values are always `String` types. This was
+//! by design, and no convenience functions are planned. To convert a
+//! `String` to something else, use `String`'s build-in `parse()`
+//! function instead:
 //!
 //!```
 //! use clappers::Clappers;
 //!
 //! fn main() {
-//!     let clappers = Clappers::build()
+//!     let clappers = Clappers::new()
 //!         .set_singles(vec!["number"])
-//!         .parse();
+//!         .build();
 //!
 //!     let number: i32 = clappers.get_single("number").parse().unwrap_or(0);
 //!
@@ -270,7 +281,7 @@ pub struct Clappers {
 }
 
 impl Clappers {
-    /// Build a `Clappers` parser
+    /// Creates a `Clappers` parser
     ///
     /// # Parameters
     ///
@@ -278,13 +289,15 @@ impl Clappers {
     ///
     /// # Return value
     ///
-    /// An empty `Clappers` parser, which is ready to be configured by chaining:
+    /// An empty `Clappers` parser, which is ready to be configured by
+    /// chaining:
     ///
     /// - `set_flags()`
     /// - `set_singles()`
     /// - `set_multiples()`
     ///
-    /// Once configured, `parse()` is chained last to parse the actual command line arguments
+    /// Once configured, `build()` is chained last to build the actual
+    /// command line arguments parser
     ///
     /// # Example
     ///
@@ -292,17 +305,17 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_flags(vec!["h|help", "v|verbose"])
     ///         .set_singles(vec!["o|output", "u|username"])
     ///         .set_multiples(vec!["i|input", "host"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     // ...
     /// }
     /// ```
     ///
-    pub fn build() -> Self {
+    pub fn new() -> Self {
         Self {
             config: Config {
                 flags: ConfigType::new(),
@@ -319,8 +332,8 @@ impl Clappers {
 
     /// Add flag argument parsing to the `Clappers` config
     ///
-    /// Flag arguments are `true` if they were supplied on the command line, and `false` otherwise
-    /// e.g:
+    /// Flag arguments are `true` if they were supplied on the command
+    /// line, and `false` otherwise e.g:
     ///
     ///```ignore
     /// -h
@@ -333,9 +346,11 @@ impl Clappers {
     ///
     /// # Parameters
     ///
-    /// `arg_specs` specifies which flag arguments on the command line to care about.
+    /// `arg_specs` specifies which flag arguments on the command line
+    /// to care about.
     ///
-    /// Each `arg_spec` contains "|" separated flag argument alias names e.g:
+    /// Each `arg_spec` contains "|" separated flag argument alias
+    /// names e.g:
     ///
     ///```ignore
     /// clappers.set_flags(vec!["h|help", "v|verbose"]);
@@ -351,11 +366,11 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_flags(vec!["h|help", "v|verbose"])
     ///         .set_singles(vec!["o|output", "u|username"])
     ///         .set_multiples(vec!["i|input", "host"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     // ...
     /// }
@@ -368,8 +383,9 @@ impl Clappers {
 
     /// Add single value argument parsing to the `Clappers` config
     ///
-    /// Single value arguments contain a single `String` value if they were supplied on the command
-    /// line, and empty `String` otherwise e.g:
+    /// Single value arguments contain a single `String` value if they
+    /// were supplied on the command line, and empty `String`
+    /// otherwise e.g:
     ///
     ///```ignore
     /// -o filename.txt
@@ -380,9 +396,11 @@ impl Clappers {
     ///
     /// # Parameters
     ///
-    /// `arg_specs` specifies which single value arguments on the command line to care about.
+    /// `arg_specs` specifies which single value arguments on the
+    /// command line to care about.
     ///
-    /// Each `arg_spec` contains "|" separated single value argument alias names e.g:
+    /// Each `arg_spec` contains "|" separated single value argument
+    /// alias names e.g:
     ///
     ///```ignore
     /// clappers.set_singles(vec!["o|output", "u|username"]);
@@ -398,11 +416,11 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_flags(vec!["h|help", "v|verbose"])
     ///         .set_singles(vec!["o|output", "u|username"])
     ///         .set_multiples(vec!["i|input", "host"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     // ...
     /// }
@@ -415,8 +433,9 @@ impl Clappers {
 
     /// Add multiple value argument parsing to the `Clappers` config
     ///
-    /// Multiple value arguments contain at least a singly populated `Vec<String>` value if they
-    /// were supplied on the command line, and empty `Vec<String>` otherwise e.g:
+    /// Multiple value arguments contain at least a singly populated
+    /// `Vec<String>` value if they were supplied on the command line,
+    /// and empty `Vec<String>` otherwise e.g:
     ///
     ///```ignore
     /// -i file1.txt
@@ -424,15 +443,17 @@ impl Clappers {
     /// --host host1
     ///```
     ///
-    /// They can also contain multiple values, by repetition on the command line e.g:
+    /// They can also contain multiple values, by repetition on the
+    /// command line e.g:
     ///
     ///```ignore
     /// -i file1.txt -i file2.txt ... -i fileN.txt
     /// --host host1 --host host2 ... --host hostN
     ///```
     ///
-    /// The following format also works, reading from the first value until either the next
-    /// argument is reached, or until the end of the entire command line arguments e.g:
+    /// The following format also works, reading from the first value
+    /// until either the next argument is reached, or until the end of
+    /// the entire command line arguments e.g:
     ///
     ///```ignore
     /// -i file1.txt file2.txt ... fileN.txt -n next_argument
@@ -441,9 +462,11 @@ impl Clappers {
     ///
     /// # Parameters
     ///
-    /// `arg_specs` specifies which multiple value arguments on the command line to care about.
+    /// `arg_specs` specifies which multiple value arguments on the
+    /// command line to care about.
     ///
-    /// Each `arg_spec` contains "|" separated multiple value argument alias names e.g:
+    /// Each `arg_spec` contains "|" separated multiple value argument
+    /// alias names e.g:
     ///
     ///```ignore
     /// clappers.set_multiples(vec!["i|input", "host"]);
@@ -459,11 +482,11 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_flags(vec!["h|help", "v|verbose"])
     ///         .set_singles(vec!["o|output", "u|username"])
     ///         .set_multiples(vec!["i|input", "host"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     // ...
     /// }
@@ -474,7 +497,7 @@ impl Clappers {
         self
     }
 
-    /// Parse the command line arguments with the current `Clappers` config
+    /// Build the command line arguments parser with the current `Clappers` config
     ///
     /// # Parameters
     ///
@@ -482,7 +505,8 @@ impl Clappers {
     ///
     /// # Return value
     ///
-    /// The `Clappers` parser containing the parsed command line arguments values, accessed with:
+    /// The `Clappers` parser containing the parsed command line
+    /// arguments values, accessed with:
     ///
     /// - `get_flags()`
     /// - `get_singles()`
@@ -495,11 +519,11 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_flags(vec!["h|help", "v|verbose"])
     ///         .set_singles(vec!["o|output", "u|username"])
     ///         .set_multiples(vec!["i|input", "host"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     if clappers.get_flag("help") {
     ///         // Show help text
@@ -509,7 +533,7 @@ impl Clappers {
     /// }
     /// ```
     ///
-    pub fn parse(mut self) -> Self {
+    pub fn build(mut self) -> Self {
         // setup "leftovers" before parsing
         self.config.multiples.name.insert("".to_string());
         self.config
@@ -579,7 +603,8 @@ impl Clappers {
     ///
     /// # Return value
     ///
-    /// `true` if the flag was supplied on the command line, and `false` otherwise
+    /// `true` if the flag was supplied on the command line, and
+    /// `false` otherwise
     ///
     /// # Example
     ///
@@ -587,9 +612,9 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_flags(vec!["h|help"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     if clappers.get_flag("help") {
     ///         // Show help text
@@ -619,8 +644,8 @@ impl Clappers {
     ///
     /// # Return value
     ///
-    /// The single `String` value if they were supplied on the command line, and empty `String`
-    /// otherwise
+    /// The single `String` value if they were supplied on the command
+    /// line, and empty `String` otherwise
     ///
     /// # Example
     ///
@@ -628,9 +653,9 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_singles(vec!["output"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     println!("Output filename is {}", clappers.get_single("output"));
     ///
@@ -660,8 +685,8 @@ impl Clappers {
     ///
     /// # Return value
     ///
-    /// Multiple `String` values if they were supplied on the command line, and empty `Vec<String>`
-    /// otherwise
+    /// Multiple `String` values if they were supplied on the command
+    /// line, and empty `Vec<String>` otherwise
     ///
     /// # Example
     ///
@@ -669,9 +694,9 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
+    ///     let clappers = Clappers::new()
     ///         .set_multiples(vec!["input"])
-    ///         .parse();
+    ///         .build();
     ///
     ///     println!("Input filenames are {:#?}", clappers.get_multiple("input"));
     ///
@@ -697,8 +722,9 @@ impl Clappers {
     ///
     /// # Return value
     ///
-    /// All `String` values supplied on the command line that are not associated with any argument,
-    /// and empty `Vec<String>` otherwise
+    /// All `String` values supplied on the command line that are not
+    /// associated with any argument, and empty `Vec<String>`
+    /// otherwise
     ///
     /// # Example
     ///
@@ -706,8 +732,8 @@ impl Clappers {
     /// use clappers::Clappers;
     ///
     /// fn main() {
-    ///     let clappers = Clappers::build()
-    ///         .parse();
+    ///     let clappers = Clappers::new()
+    ///         .build();
     ///
     ///     println!("`ls *` returned the following filenames: {:#?}", clappers.get_leftovers());
     ///
