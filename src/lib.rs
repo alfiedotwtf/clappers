@@ -212,9 +212,62 @@
 //!```
 //!
 
-use std::collections::HashMap;
-use std::collections::HashSet;
-use std::env;
+use std::{
+    collections::{HashMap, HashSet},
+    env,
+};
+
+#[derive(Clone, Debug)]
+struct ConfigType {
+    name: HashSet<String>,
+    aliases: HashMap<String, String>,
+}
+
+impl ConfigType {
+    fn new() -> Self {
+        Self {
+            name: HashSet::new(),
+            aliases: HashMap::new(),
+        }
+    }
+
+    fn add_to_config(&mut self, arg_specs: Vec<&str>) {
+        for arg_spec in arg_specs {
+            let arguments: Vec<&str> = arg_spec.split('|').collect();
+
+            if arguments.is_empty() {
+                continue;
+            }
+
+            self.name.insert(arguments[0].to_string());
+
+            for argument in &arguments {
+                self.aliases
+                    .insert(argument.to_string(), arguments[0].to_string());
+            }
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
+struct Config {
+    flags: ConfigType,
+    singles: ConfigType,
+    multiples: ConfigType,
+}
+
+#[derive(Clone, Debug)]
+struct Values {
+    flags: HashSet<String>,
+    singles: HashMap<String, String>,
+    multiples: HashMap<String, Vec<String>>,
+}
+
+#[derive(Clone, Debug)]
+pub struct Clappers {
+    config: Config,
+    values: Values,
+}
 
 impl Clappers {
     /// Build a `Clappers` parser
@@ -665,56 +718,4 @@ impl Clappers {
     pub fn get_leftovers(&self) -> Vec<String> {
         self.get_multiple("")
     }
-}
-
-#[derive(Clone, Debug)]
-pub struct Clappers {
-    config: Config,
-    values: Values,
-}
-
-#[derive(Clone, Debug)]
-struct Config {
-    flags: ConfigType,
-    singles: ConfigType,
-    multiples: ConfigType,
-}
-
-#[derive(Clone, Debug)]
-struct Values {
-    flags: HashSet<String>,
-    singles: HashMap<String, String>,
-    multiples: HashMap<String, Vec<String>>,
-}
-
-impl ConfigType {
-    fn new() -> Self {
-        Self {
-            name: HashSet::new(),
-            aliases: HashMap::new(),
-        }
-    }
-
-    fn add_to_config(&mut self, arg_specs: Vec<&str>) {
-        for arg_spec in arg_specs {
-            let arguments: Vec<&str> = arg_spec.split('|').collect();
-
-            if arguments.is_empty() {
-                continue;
-            }
-
-            self.name.insert(arguments[0].to_string());
-
-            for argument in &arguments {
-                self.aliases
-                    .insert(argument.to_string(), arguments[0].to_string());
-            }
-        }
-    }
-}
-
-#[derive(Clone, Debug)]
-struct ConfigType {
-    name: HashSet<String>,
-    aliases: HashMap<String, String>,
 }
